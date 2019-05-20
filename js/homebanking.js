@@ -13,16 +13,21 @@ window.onload = function() {
 function cambiarLimiteDeExtraccion() {
     var cambiarLimiteDeExtraccion=prompt("ingrese el monto al que quiere permitir como maximo para extracciones");
     while (isNaN(cambiarLimiteDeExtraccion)==true)cambiarLimiteDeExtraccion=prompt("Ingrese un monton correcto");
-    if (cambiarLimiteDeExtraccion==null) return alert("usted no ingreso datos se mantedra el limite actual")
+    if (cambiarLimiteDeExtraccion=="") return alert("usted no ingreso datos se mantedra el limite actual")
     limiteExtraccion=cambiarLimiteDeExtraccion
     alert("Su nuevo limite de extraccion es: "+ limiteExtraccion)
     actualizarLimiteEnPantalla()   
 }
 function extraerDinero() {
-    var quitarDeDinero= prompt("Ingrese el monto que quiere depositar")
+    var quitarDeDinero= prompt("Ingrese el monto que quiere extraer")
     var auxiliar
-    while (isNaN(quitarDeDinero)==true)quitarDeDinero=prompt("Ingrese un monton correcto");
-    if (quitarDeDinero==null)return actualizarSaldoEnPantalla();
+    console.log(limiteExtraccion);
+    console.log(limiteExtraccion)
+    
+    while (isNaN(quitarDeDinero)==true || parseInt(limiteExtraccion)<parseInt(quitarDeDinero))quitarDeDinero=prompt("Ingrese un monton correcto o no exceda limite de extracion");
+    if (quitarDeDinero==""){
+        alert("usted no ingreso ningun monto de dinero para extraer")
+        return actualizarSaldoEnPantalla()}
     else if(quitarDeDinero>saldoCuenta)return alert("Uste no tiene suficiente fondos para extraer")
     auxiliar=saldoCuenta
     saldoCuenta-=parseInt(quitarDeDinero)
@@ -33,8 +38,10 @@ function extraerDinero() {
 function depositarDinero() {
     var ingresoDeDinero= prompt("Ingrese el monto que quiere depositar")
     var auxiliar
-    while (isNaN(ingresoDeDinero)==true)ingresoDeDinero=prompt("Ingrese un monton correcto")
-    if (ingresoDeDinero==null)return actualizarSaldoEnPantalla()
+    while (isNaN(ingresoDeDinero)==true || parseInt(ingresoDeDinero)>100000)ingresoDeDinero=prompt("Ingrese un monton correcto puede depositar hasta 100000 pesos")
+    if (ingresoDeDinero==""){
+        alert("usted no ingreso fondos")
+        return actualizarSaldoEnPantalla()}
     auxiliar=saldoCuenta
     saldoCuenta+=parseInt(ingresoDeDinero)
     alert("Su saldo es: "+auxiliar+"\n"+"Usted depositara: "+ ingresoDeDinero+"\n"+"Dinero actual: "+saldoCuenta)
@@ -60,8 +67,10 @@ function transferirDinero() {
     alert("usted selecion la cuenta: "+ seleccionDeCuentas) 
     var transferirDinero=prompt("ingrese el dinero que desea tranferir")
     var auxiliar
-    while (isNaN(transferirDinero)==true)transferirDinero=prompt("Ingrese un monton correcto")
-    if (transferirDinero==null)return actualizarSaldoEnPantalla()
+    while (isNaN(transferirDinero)==true || parseInt(transferirDinero)>parseInt(saldoCuenta))transferirDinero=prompt("Ingrese un monton correcto o usted no tiene fondos suficientes")
+    if (transferirDinero==""){
+        alert("usted no ingreso ningun monto de dinero para extraer")
+        return actualizarSaldoEnPantalla()}
     auxiliar=saldoCuenta
     saldoCuenta-=parseInt(transferirDinero)
     alert("Su saldo es: "+auxiliar+"\n"+"Usted va transferir: "+ transferirDinero+"\n"+"\n"+"Dinero actual: "+saldoCuenta)
